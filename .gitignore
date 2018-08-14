@@ -109,6 +109,4 @@ $RECYCLE.BIN/
 
 # Others
 lib/
-data/
-dist/
 .vscode/
