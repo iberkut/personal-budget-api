@@ -32,7 +32,7 @@
     "mocha": "mocha test/ --recursive --exit",
     "clean": "rimraf dist",
     "clean:data": "npm run clean && rimraf data",
-    "clean:all": "npm run clean:data && rimraf node_modules"
+    "clean:all": "npm run clean:data && rm -rf node_modules"
   },
   "dependencies": {
     "@feathersjs/configuration": "^2.0.0",
@@ -44,7 +44,7 @@
     "cors": "^2.8.4",
     "helmet": "^3.13.0",
     "serve-favicon": "^2.5.0",
-    "winston": "^3.0.0"
+    "winston": "2.4.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
