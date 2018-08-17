@@ -2,7 +2,7 @@
 
 var five = require("johnny-five");
 let motors;
-const standartSpeed = 100;
+const standartSpeed = 120;
 let board;
 
 const robot = {
@@ -69,11 +69,11 @@ function rotateRight({ speed = standartSpeed, time = 0 } = {}) {
 }
 function left() {
     stop();
-    rotateLeft( { time: 50 } )
+    rotateLeft( { time: 100 } )
 }
 function right() {
     stop();
-    rotateRight({ time: 50 })
+    rotateRight({ time: 100 })
 }
 
 module.exports = robot;
