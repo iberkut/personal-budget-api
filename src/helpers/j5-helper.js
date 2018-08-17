@@ -2,7 +2,7 @@
 
 var five = require("johnny-five");
 let motors;
-const standartSpeed = 120;
+const standartSpeed = 140;
 let board;
 
 const robot = {
@@ -24,14 +24,12 @@ function initBoard() {
     motors = new five.Motors([{
       pins: {
         pwm: 9,
-        dir: 7,
-        invertPWM: true
+        dir: 7
       }
     }, {
       pins: {
         pwm: 10,
-        dir: 8,
-        invertPWM: true
+        dir: 8
       }
     }]);
 
@@ -47,11 +45,12 @@ function initBoard() {
 function stop() {
   motors.stop();
 }
+// use reverce direction
 function fwd(speed = standartSpeed) {
-  motors.fwd(speed);
+  motors.rev(speed);
 }
 function rev(speed = standartSpeed) {
-  motors.rev(speed);
+  motors.fwd(speed);
 }
 function rotateLeft({ speed = standartSpeed, time = 0 } = {}) {
   motors[0].fwd(speed);
