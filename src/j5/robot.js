@@ -21,8 +21,9 @@ function Robot() {
             }
         }]);
 
-        return this.repl.inject({
-            motors
+        this.repl.inject({
+            motors,
+            robot: this
         });
 
     });
@@ -61,4 +62,4 @@ Robot.prototype.right = function() {
     rotateRight({ time: 50 })
 }
 
-export default Robot;
+module.exports = Robot;
