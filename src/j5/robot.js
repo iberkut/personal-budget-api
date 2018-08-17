@@ -3,6 +3,7 @@
 var five = require("johnny-five");
 let motors;
 const standartSpeed = 100;
+let board;
 
 const robot = {
     initBoard,
@@ -16,19 +17,21 @@ const robot = {
 };
 
 function initBoard() {
-    var board = new five.Board();
+    board = new five.Board();
 
     board.on("ready", function () {
 
         motors = new five.Motors([{
             pins: {
                 pwm: 9,
-                dir: 7
+                dir: 7,
+                invertPWM: true
             }
         }, {
             pins: {
                 pwm: 10,
-                dir: 8
+                dir: 8,
+                invertPWM: true
             }
         }]);
 
@@ -50,7 +53,7 @@ function fwd(speed = standartSpeed) {
 function rev(speed = standartSpeed) {
     motors.rev(speed);
 }
-function rotateLeft(speed = standartSpeed, time = 0) {
+function rotateLeft({ speed = standartSpeed, time = 0 } = {}) {
     motors[0].fwd(speed);
     motors[1].rev(speed);
     time && board.wait(time, () => {
@@ -74,3 +77,4 @@ function right() {
 }
 
 module.exports = robot;
+// robot.stop()
