@@ -53,26 +53,26 @@ function rev(speed = standartSpeed) {
   motors.fwd(speed);
 }
 function rotateLeft({ speed = standartSpeed, time = 0 } = {}) {
-  motors[0].fwd(speed);
-  motors[1].rev(speed);
-  time && board.wait(time, () => {
-    stop();
-  })
-}
-function rotateRight({ speed = standartSpeed, time = 0 } = {}) {
   motors[1].fwd(speed);
   motors[0].rev(speed);
   time && board.wait(time, () => {
     stop();
   })
 }
+function rotateRight({ speed = standartSpeed, time = 0 } = {}) {
+  motors[0].fwd(speed);
+  motors[1].rev(speed);
+  time && board.wait(time, () => {
+    stop();
+  })
+}
 function left() {
   stop();
-  rotateLeft({ time: 100 })
+  rotateLeft({ speed: 200, time: 200 })
 }
 function right() {
   stop();
-  rotateRight({ time: 100 })
+  rotateRight({ speed: 200, time: 200 })
 }
 
 module.exports = robot;
