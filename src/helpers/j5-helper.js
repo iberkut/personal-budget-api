@@ -1,10 +1,9 @@
 // in rpi_zero -> /dev/ttyACM0
 
-const five = require('johnny-five');
-
+var five = require("johnny-five");
 let motors;
-
-const standartSpeed = 100;
+const standartSpeed = 140;
+let board;
 
 const robot = {
   initBoard,
@@ -18,7 +17,7 @@ const robot = {
 };
 
 function initBoard() {
-  const board = new five.Board();
+  board = new five.Board();
 
   board.on("ready", function () {
 
@@ -46,13 +45,14 @@ function initBoard() {
 function stop() {
   motors.stop();
 }
+// use reverce direction
 function fwd(speed = standartSpeed) {
-  motors.fwd(speed);
-}
-function rev(speed = standartSpeed) {
   motors.rev(speed);
 }
-function rotateLeft(speed = standartSpeed, time = 0) {
+function rev(speed = standartSpeed) {
+  motors.fwd(speed);
+}
+function rotateLeft({ speed = standartSpeed, time = 0 } = {}) {
   motors[0].fwd(speed);
   motors[1].rev(speed);
   time && board.wait(time, () => {
@@ -62,17 +62,18 @@ function rotateLeft(speed = standartSpeed, time = 0) {
 function rotateRight({ speed = standartSpeed, time = 0 } = {}) {
   motors[1].fwd(speed);
   motors[0].rev(speed);
-  time &&  board.wait(time, () => {
+  time && board.wait(time, () => {
     stop();
   })
 }
 function left() {
   stop();
-  rotateLeft( { time: 50 } )
+  rotateLeft({ time: 100 })
 }
 function right() {
   stop();
-  rotateRight({ time: 50 })
+  rotateRight({ time: 100 })
 }
 
 module.exports = robot;
+// robot.stop()
