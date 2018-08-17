@@ -4,7 +4,7 @@ var five = require("johnny-five");
 let motors;
 const standartSpeed = 100;
 
-function initBoard() {
+function Robot() {
     var board = new five.Board();
 
     board.on("ready", function () {
@@ -21,7 +21,7 @@ function initBoard() {
             }
         }]);
 
-        this.repl.inject({
+        return this.repl.inject({
             motors
         });
 
@@ -29,45 +29,36 @@ function initBoard() {
 }
 
 
-function stop() {
+Robot.prototype.stop = function() {
     motors.stop();
 }
-function fwd(speed = standartSpeed) {
+Robot.prototype.fwd = function(speed = standartSpeed) {
     motors.fwd(speed);
 }
-function rev(speed = standartSpeed) {
+Robot.prototype.rev = function(speed = standartSpeed) {
     motors.fwd(speed);
 }
-function rotateLeft(speed = standartSpeed, time = 0) {
+Robot.prototype.rotateLeft = function(speed = standartSpeed, time = 0) {
     motors[0].fwd(speed);
     motors[1].rev(speed);
     time && board.wait(time, () => {
         stop();
     })
 }
-function rotateRight({ speed = standartSpeed, time = 0 } = {}) {
+Robot.prototype.rotateRight = function({ speed = standartSpeed, time = 0 } = {}) {
     motors[0].fwd(speed);
     motors[1].rev(speed);
     time &&  board.wait(time, () => {
         stop();
     })
 }
-function left() {
+Robot.prototype.left = function() {
     stop();
     rotateLeft( { time: 50 } )
 }
-function right() {
+Robot.prototype.right = function() {
     stop();
     rotateRight({ time: 50 })
 }
 
-export default {
-    initBoard,
-    fwd,
-    rev,
-    stop,
-    left,
-    right,
-    rotateLeft,
-    rotateRight
-};
+export default Robot;
