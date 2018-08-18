@@ -6,6 +6,10 @@ class Service {
     this.options = options || {};
   }
 
+  setup(app){
+    this.app = app;
+  }
+
   async find (params) {
     const {
       fwd,
@@ -14,9 +18,11 @@ class Service {
       left,
       right,
       rotateLeft,
-      rotateRight
+      rotateRight,
+      game,
+      session = false
     } = params.query || {};
-    
+
     if (fwd) {
       robot.fwd();
     } else if (rev) {
@@ -32,34 +38,13 @@ class Service {
     }else if (rotateRight) {
       robot.rotateRight();
     }
-    
-    return params.query;
-  }
 
-  async get (id, params) {
-    return {
-      id, text: `A new message with ID: ${id}!`
-    };
-  }
+    const stateChangeService = this.app.service('state-change')
 
-  async create (data, params) {
-    if (Array.isArray(data)) {
-      return Promise.all(data.map(current => this.create(current, params)));
-    }
-
-    return data;
-  }
-
-  async update (id, data, params) {
-    return data;
-  }
-
-  async patch (id, data, params) {
-    return data;
-  }
-
-  async remove (id, params) {
-    return { id };
+    await stateChangeService.create({
+      session,
+      action: game ? 'game' : 'move'
+    })
   }
 }
 

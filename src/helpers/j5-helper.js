@@ -1,25 +1,33 @@
 // in rpi_zero -> /dev/ttyACM0
+const five = require('johnny-five')
+let motors
+const standardSpeed = 140
+let board
 
-var five = require("johnny-five");
-let motors;
-const standartSpeed = 140;
-let board;
+const fakeMotors = {
+  stop() {
+    console.log('fake motors => stop')
+  },
+  rev() {
+    console.log('fake motors => rev')
+  },
+  fwd() {
+    console.log('fake motors => fwd')
+  },
+  fake(action) {
+    console.log(`fake motors => ${action}`)
+    return true
+  }
+}
 
-const robot = {
-  initBoard,
-  fwd,
-  rev,
-  stop,
-  left,
-  right,
-  rotateLeft,
-  rotateRight
-};
+const tryMotors = motors => {
+  return motors || fakeMotors
+}
 
-function initBoard() {
-  board = new five.Board();
+const initBoard = () => {
+  board = new five.Board()
 
-  board.on("ready", function () {
+  board.on('ready', function () {
 
     motors = new five.Motors([{
       pins: {
@@ -31,49 +39,70 @@ function initBoard() {
         pwm: 10,
         dir: 8
       }
-    }]);
+    }])
 
     return this.repl.inject({
       motors,
       robot
-    });
+    })
 
-  });
-}
-
-
-function stop() {
-  motors.stop();
-}
-// use reverce direction
-function fwd(speed = standartSpeed) {
-  motors.rev(speed);
-}
-function rev(speed = standartSpeed) {
-  motors.fwd(speed);
-}
-function rotateLeft({ speed = standartSpeed, time = 0 } = {}) {
-  motors[1].fwd(speed);
-  motors[0].rev(speed);
-  time && board.wait(time, () => {
-    stop();
   })
 }
-function rotateRight({ speed = standartSpeed, time = 0 } = {}) {
-  motors[0].fwd(speed);
-  motors[1].rev(speed);
+
+const stop = () => {
+  tryMotors(motors).stop()
+}
+
+// use reverse direction
+const rev = (speed = standardSpeed) => {
+  tryMotors(motors).rev(speed)
+}
+
+const fwd = (speed = standardSpeed) => {
+  tryMotors(motors).fwd(speed)
+}
+
+const rotateLeft = ({ speed = standardSpeed, time = 0 } = {}) => {
+  if (tryMotors(motors).fake('rotateLeft')) {
+    return
+  }
+  motors[1].fwd(speed)
+  motors[0].rev(speed)
   time && board.wait(time, () => {
-    stop();
+    stop()
   })
 }
-function left() {
-  stop();
+
+const rotateRight = ({ speed = standardSpeed, time = 0 } = {}) => {
+  if (tryMotors(motors).fake('rotateRight')) {
+    return
+  }
+  motors[0].fwd(speed)
+  motors[1].rev(speed)
+  time && board.wait(time, () => {
+    stop()
+  })
+}
+
+const left = () => {
+  stop()
   rotateLeft({ speed: 200, time: 200 })
 }
-function right() {
-  stop();
+
+const right = () => {
+  stop()
   rotateRight({ speed: 200, time: 200 })
 }
 
-module.exports = robot;
-// robot.stop()
+const robot = {
+  initBoard,
+  fwd,
+  rev,
+  stop,
+  left,
+  right,
+  rotateLeft,
+  rotateRight
+}
+
+module.exports = robot
