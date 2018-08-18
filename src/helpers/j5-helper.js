@@ -1,7 +1,7 @@
 // in rpi_zero -> /dev/ttyACM0
 const five = require('johnny-five')
 let motors
-const standardSpeed = 100
+const standardSpeed = 120
 let board
 
 const fakeMotors = {
