@@ -55,11 +55,11 @@ const stop = () => {
 
 // use reverse direction
 const rev = (speed = standardSpeed) => {
-  tryMotors(motors).rev(speed)
+  tryMotors(motors).fwd(speed)
 }
 
 const fwd = (speed = standardSpeed) => {
-  tryMotors(motors).fwd(speed)
+  tryMotors(motors).rev(speed)
 }
 
 const rotateLeft = ({ speed = standardSpeed, time = 0 } = {}) => {
