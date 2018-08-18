@@ -63,9 +63,6 @@ const fwd = (speed = standardSpeed) => {
 }
 
 const rotateLeft = ({ speed = standardSpeed, time = 0 } = {}) => {
-  if (tryMotors(motors).fake('rotateLeft')) {
-    return
-  }
   motors[1].fwd(speed)
   motors[0].rev(speed)
   time && board.wait(time, () => {
@@ -74,9 +71,6 @@ const rotateLeft = ({ speed = standardSpeed, time = 0 } = {}) => {
 }
 
 const rotateRight = ({ speed = standardSpeed, time = 0 } = {}) => {
-  if (tryMotors(motors).fake('rotateRight')) {
-    return
-  }
   motors[0].fwd(speed)
   motors[1].rev(speed)
   time && board.wait(time, () => {
