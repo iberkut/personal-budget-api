@@ -42,8 +42,7 @@ const initBoard = () => {
     }])
 
     return this.repl.inject({
-      motors,
-      robot
+      ...robot
     })
 
   })
@@ -80,12 +79,12 @@ const rotateRight = ({ speed = standardSpeed, time = 0 } = {}) => {
 
 const left = () => {
   stop()
-  rotateLeft({ speed: 200, time: 200 })
+  rotateLeft({ speed: 255, time: 100 })
 }
 
 const right = () => {
   stop()
-  rotateRight({ speed: 200, time: 200 })
+  rotateRight({ speed: 255, time: 100 })
 }
 
 const robot = {
@@ -99,4 +98,4 @@ const robot = {
   rotateRight
 }
 
-module.exports = robot
+module.exports = robot 
