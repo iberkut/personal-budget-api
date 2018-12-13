@@ -1,4 +1,4 @@
-# personal-budget-api
+# isb-robot-api
 
 > Personal Budget API for hackathon
 
