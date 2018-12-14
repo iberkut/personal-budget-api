@@ -14,7 +14,7 @@ Getting up and running is as easy as 1, 2, 3.
 2. Install your dependencies
 
     ```
-    cd path/to/personal-budget-api; npm install
+    cd path/to/isb-robot-api; npm install
     ```
 
 3. Start your app
